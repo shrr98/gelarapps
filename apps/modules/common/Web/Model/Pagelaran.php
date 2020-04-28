@@ -7,11 +7,13 @@ use Phalcon\Mvc\Model;
 class Pagelaran extends Model
 {
     public $id;
-    public $password;
-    public $nama;
-    public $email;
-    public $status;
-    public $photo;
+    public $judul;
+    public $tempat;
+    public $waktu_mulai;
+    public $qaktu_selesai;
+    public $deskripsi;
+    public $photo_path;
+
 
     public function initialize()
     {

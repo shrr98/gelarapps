@@ -39,7 +39,7 @@
         
     <link rel="stylesheet" href="<?= $this->url->get('css/form.css') ?>">
 
-		<title>GelarApps - Komunitas</title>
+		<title>GelarApps - Pagelaran</title>
 	</head>
 	<body>
         
@@ -91,28 +91,37 @@
         <?php } ?>
 
 		
-<h1>Buat Komunitasmu</h1>
+<h1>Buat Pagelaranmu</h1>
 
 <div class="wrapper fadeInDown">
     <div id="formContent">
-            <h3>Komunitas Baru</h3>
+            <h3>Pagelaran Baru</h3>
         <div class="notif">
             <?= $this->flash->output() ?>
         </div>
         <?= $form->startForm() ?>
-            <?= $form->rendering('nama_komunitas') ?>
-            <?php if (isset($errmsg) && isset($errmsg['nama_komunitas'])) { ?>
-                <?= $this->flash->error($errmsg['nama_komunitas']) ?>
+            <?= $form->rendering('judul') ?>
+            <?php if (isset($errmsg) && isset($errmsg['judul'])) { ?>
+                <?= $this->flash->error($errmsg['judul']) ?>
             <?php } ?>
 
-            <?= $form->rendering('kategori') ?>
-            <?php if (isset($errmsg) && isset($errmsg['kategori'])) { ?>
-                <?= $this->flash->error($errmsg['kategori']) ?>
+            <?= $form->rendering('photo') ?>
+            <?php if (isset($errmsg) && isset($errmsg['photo'])) { ?>
+                <?= $this->flash->error($errmsg['photo']) ?>
             <?php } ?>
-
-            <?= $form->rendering('alamat') ?>
-            <?php if (isset($errmsg) && isset($errmsg['alamat'])) { ?>
-                <?= $this->flash->error($errmsg['alamat']) ?>
+            
+            <label for="waktu_mulai">Waktu Mulai</label>
+            <?= $form->rendering('waktu_mulai') ?>
+            
+            <label for="waktu_mulai">Waktu Selesai</label>
+            <?= $form->rendering('waktu_selesai') ?>
+        
+            <?= $form->rendering('komunitas') ?>
+            <?= $form->rendering('creator') ?>
+            
+            <?= $form->rendering('tempat') ?>
+            <?php if (isset($errmsg) && isset($errmsg['tempat'])) { ?>
+                <?= $this->flash->error($errmsg['tempat']) ?>
             <?php } ?>
 
             <?= $form->rendering('deskripsi') ?>

@@ -10,7 +10,6 @@ use Phalcon\Forms\Element\Select;
 use Phalcon\Forms\Element\Submit;
 
 use Gelarapps\Common\Web\Form\BaseForm;
-use Gelarapps\Common\Web\Validator\LoginValidation;
 use Gelarapps\Common\Web\Model\Kategori;
 
 class KomunitasForm extends BaseForm {
@@ -66,7 +65,7 @@ class KomunitasForm extends BaseForm {
             new Submit (
                 'Buat',
                 [
-                    'name' => 'buat',
+                    'name' => 'onbuat',
                     "class" => "fadeIn fourth"
 
                 ]
@@ -76,10 +75,7 @@ class KomunitasForm extends BaseForm {
         $this->setUserOptions([
             'method'=> 'POST',
             'class' => 'loginForm'
-        ]);
-
-       $this->setValidation(new LoginValidation());
-        
+        ]);        
     }
 
     private function generateOptions(){

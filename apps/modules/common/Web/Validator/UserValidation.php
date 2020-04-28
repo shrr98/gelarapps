@@ -58,15 +58,6 @@ class UserValidation extends Validation
         );
 
         $this->add(
-            'nama',
-            new Alnum(
-                [
-                    'message' => 'Nama hanya boleh terdiri dari alfanumerik.'
-                ]
-            )
-        );
-
-        $this->add(
             'password',
             new PresenceOf(
                 [

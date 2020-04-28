@@ -37,9 +37,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
         
-    <link rel="stylesheet" href="<?= $this->url->get('css/form.css') ?>">
-
-		<title>GelarApps - Komunitas</title>
+		<title>GelarApps - Pagelaran</title>
 	</head>
 	<body>
         
@@ -91,39 +89,29 @@
         <?php } ?>
 
 		
-<h1>Buat Komunitasmu</h1>
-
-<div class="wrapper fadeInDown">
-    <div id="formContent">
-            <h3>Komunitas Baru</h3>
-        <div class="notif">
-            <?= $this->flash->output() ?>
-        </div>
-        <?= $form->startForm() ?>
-            <?= $form->rendering('nama_komunitas') ?>
-            <?php if (isset($errmsg) && isset($errmsg['nama_komunitas'])) { ?>
-                <?= $this->flash->error($errmsg['nama_komunitas']) ?>
+    <h1>Pagelaran</h1>
+    <div>
+        <ul>
+            <?php foreach ($items as $item) { ?>
+                <li>
+                    <?= $this->tag->image([$this->url->get('public/data/pagelaran/' . $item->pa->photo_path)]) ?>
+                    <h5>
+                        <a href="<?= $this->url->get('pagelaran/lihat/' . $item->pa->id) ?>"><?= $item->pa->judul ?></a>
+                    </h5>
+                    <h6>
+                        <a href="<?= $this->url->get('komunitas/kategori/' . $item->id_kat) ?>">
+                            <?= $item->nama_kategori ?> 
+                        </a>
+                        - 
+                        <a href="<?= $this->url->get('komunitas/lihat/' . $item->pa->komunitas) ?>">
+                            <?= $item->nama_komunitas ?>
+                        </a>
+                    </h6>
+                        <?= date('d-M-Y', strtotime($item->pa->waktu_mulai)) ?> 
+                </li>
             <?php } ?>
-
-            <?= $form->rendering('kategori') ?>
-            <?php if (isset($errmsg) && isset($errmsg['kategori'])) { ?>
-                <?= $this->flash->error($errmsg['kategori']) ?>
-            <?php } ?>
-
-            <?= $form->rendering('alamat') ?>
-            <?php if (isset($errmsg) && isset($errmsg['alamat'])) { ?>
-                <?= $this->flash->error($errmsg['alamat']) ?>
-            <?php } ?>
-
-            <?= $form->rendering('deskripsi') ?>
-            <?php if (isset($errmsg) && isset($errmsg['deskripsi'])) { ?>
-                <?= $this->flash->error($errmsg['deskripsi']) ?>
-            <?php } ?>
-            
-            <?= $form->rendering('Buat') ?>
-        <?= $form->endForm() ?>
+        </ul>
     </div>
-</div>
 
 
 		

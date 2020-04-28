@@ -88,6 +88,11 @@ $container['voltService'] = function (ViewBaseInterface $view) use ($container, 
             'prefix'    => '-prefix-',
         ]
     );
+
+    
+    $compiler = $volt->getCompiler();
+    $compiler->addFunction('strtotime', 'strtotime');
+
     
     return $volt;
 };

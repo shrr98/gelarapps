@@ -37,9 +37,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
         
-    <link rel="stylesheet" href="<?= $this->url->get('css/form.css') ?>">
-
-		<title>GelarApps - Komunitas</title>
+		<title>GelarApps - Komunitas : <?= $item->ko->nama_komunitas ?></title>
 	</head>
 	<body>
         
@@ -91,39 +89,51 @@
         <?php } ?>
 
 		
-<h1>Buat Komunitasmu</h1>
-
-<div class="wrapper fadeInDown">
-    <div id="formContent">
-            <h3>Komunitas Baru</h3>
-        <div class="notif">
-            <?= $this->flash->output() ?>
-        </div>
-        <?= $form->startForm() ?>
-            <?= $form->rendering('nama_komunitas') ?>
-            <?php if (isset($errmsg) && isset($errmsg['nama_komunitas'])) { ?>
-                <?= $this->flash->error($errmsg['nama_komunitas']) ?>
-            <?php } ?>
-
-            <?= $form->rendering('kategori') ?>
-            <?php if (isset($errmsg) && isset($errmsg['kategori'])) { ?>
-                <?= $this->flash->error($errmsg['kategori']) ?>
-            <?php } ?>
-
-            <?= $form->rendering('alamat') ?>
-            <?php if (isset($errmsg) && isset($errmsg['alamat'])) { ?>
-                <?= $this->flash->error($errmsg['alamat']) ?>
-            <?php } ?>
-
-            <?= $form->rendering('deskripsi') ?>
-            <?php if (isset($errmsg) && isset($errmsg['deskripsi'])) { ?>
-                <?= $this->flash->error($errmsg['deskripsi']) ?>
-            <?php } ?>
-            
-            <?= $form->rendering('Buat') ?>
-        <?= $form->endForm() ?>
+    <h1>Komunitas > <?= $item->ko->nama_komunitas ?></h1>
+    <div>
+        <table>
+            <tr>
+                <td>
+                    Kategori
+                </td>
+                <td>
+                    <?= $item->nama_kategori ?>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Pemilik
+                </td>
+                <td>
+                    <?= $item->ko->owner ?>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Alamat
+                </td>
+                <td>
+                    <?= $item->ko->alamat ?>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Deskripsi
+                </td>
+                <td>
+                    <?= $item->ko->deskripsi ?>
+                </td>
+            </tr>
+        </table>
     </div>
-</div>
+    <?php if ($tergabung == null) { ?>
+        <form action="/komunitas/gabung" method="POST">
+            <input type="hidden" name="id_komunitas" value=<?= $item->ko->id ?>>
+            <input class='btn btn-primary' type="submit" value="Gabung" name="gabung">
+        </form>
+    <?php } else { ?>
+        <button class='btn btn-secondary' disabled>Tergabung</button>
+    <?php } ?>
 
 
 		
