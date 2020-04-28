@@ -2,4 +2,5 @@
 /config/development/
 /vendor/
 /public/data/
+*/cache/
 *.lock
