@@ -26,32 +26,37 @@ class PagelaranController extends Controller
     }
 
     public function indexAction(){
-    
+        if(!$this->session->has('auth')){
+            (new Response())->redirect('/pagelaran/list/semua')->send();
+        }    
     }
 
-    // public function lihatAction($id_pagelaran){
-    //     if(!$this->session->has('auth')){
-    //         (new Response())->redirect('/error/login')->send();
-    //     }
-
-    //     $item = $this->modelsManager->createBuilder()
-    //                                 -> addFrom(Komunitas::class, 'ko')
-    //                                 -> columns("ko.*, ka.kategori as nama_kategori")
-    //                                 -> where("ko.id = :id:")
-    //                                 -> join(Kategori::class, 'ko.kategori=ka.id', 'ka')
-    //                                 -> orderBy("ko.nama_komunitas")
-    //                                 -> getQuery() -> execute(['id' => $id_komunitas]);
-
-    //     $this->view->setVar('item', $item[0]);
-    //     $this->view->setVar('tergabung', $tergabung);
-    // }
+    public function lihatAction($id_pagelaran){
+        try{
+            $item = $this->modelsManager->createBuilder()
+                                        -> addFrom(Pagelaran::class, 'pa')
+                                        -> columns("pa.*, ko.nama_komunitas as nama_komunitas, ka.id as id_kat, ka.kategori as nama_kategori")
+                                        -> where("pa.id = :id:")
+                                        -> join(Komunitas::class, 'pa.komunitas = ko.id', 'ko')
+                                        -> join(Kategori::class, 'ko.kategori=ka.id', 'ka')
+                                        -> getQuery() -> execute(['id' => $id_pagelaran]);
+            $this->view->setVar('item', $item[0]);
+                                        
+        }
+        catch(Exception $e){
+            (new Response())->redirect('/error/notFound')->send();
+        }                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
+    }
 
     public function listAction($mode){
         if($mode=='saya'){
             $items = $this->listSaya();
         }
-        else{
+        else if($mode=='semua'){
             $items = $this->listSemua();
+        }
+        else{
+            $items = $this->listKomunitas($mode);
         }
         $this->view->setVar('items', $items);
     }
@@ -63,11 +68,12 @@ class PagelaranController extends Controller
         $items = $this->modelsManager->createBuilder()
                                     -> addFrom(Pagelaran::class, 'pa')
                                     -> columns("pa.*, ko.nama_komunitas as nama_komunitas, ka.id as id_kat, ka.kategori as nama_kategori")
+                                    -> where("pa.creator = :id_user:")
                                     -> join(Komunitas::class, 'pa.komunitas = ko.id', 'ko')
                                     -> join(Kategori::class, 'ko.kategori=ka.id', 'ka')
                                     -> orderBy("pa.waktu_mulai")
                                     -> getQuery() 
-                                    -> execute();
+                                    -> execute(['id_user' => $this->session->get('auth')['username']]);
         
         return $items;
     }
@@ -84,44 +90,22 @@ class PagelaranController extends Controller
         return $items;
     }
 
-    // public function cariAction(){
-    //     $items = Kategori::find();
-    //     $this->view->setVar('items', $items);
-    // }
-
-
-    // public function kategoriAction($id_kategori){
-    //     $kategori = Kategori::findFirst((int)$id_kategori)->kategori;
-    //     $items = $this->modelsManager->createBuilder()
-    //                 -> addFrom(Komunitas::class, 'ko')
-    //                 -> columns("ko.id, ko.nama_komunitas")
-    //                 -> where('ko.kategori = :id:')
-    //                 -> join(Kategori::class, 'ko.kategori=ka.id', 'ka')
-    //                 -> orderBy("ko.nama_komunitas")
-    //                 -> getQuery() 
-    //                 -> execute(['id' => (int)$id_kategori]);
-    //     $this->view->setVar('items', $items);
-    //     $this->view->setVar('kategori', $kategori);
-    // }
-
-    // public function gabungAction(){
-    //     if(!$this->request->isPost()){ // method = GET
-    //         (new Response())->redirect()->send();
-    //     }
-
-    //     $keanggotaan = new Keanggotaan();
-    //     $keanggotaan->id_user = $this->session->get('auth')['username'];
-    //     $keanggotaan->id_komunitas = $this->request->getPost('id_komunitas');
-    //     $keanggotaan->role = 0;
-    //     $keanggotaan->verified = 0;
-
-    //     if($keanggotaan->create()){
-    //         $this->flash->success('Berhasil bergabung!');
-    //     }
+    public function listKomunitas($id_komunitas){
+        if(!$this->session->has('auth')){
+            (new Response())->redirect('/error/forbidden')->send();
+        }
+        $items = $this->modelsManager->createBuilder()
+                                    -> addFrom(Pagelaran::class, 'pa')
+                                    -> columns("pa.*, ko.nama_komunitas as nama_komunitas, ka.id as id_kat, ka.kategori as nama_kategori")
+                                    -> where("pa.komunitas = :id_komunitas:")
+                                    -> join(Komunitas::class, 'pa.komunitas = ko.id', 'ko')
+                                    -> join(Kategori::class, 'ko.kategori=ka.id', 'ka')
+                                    -> orderBy("pa.waktu_mulai")
+                                    -> getQuery() 
+                                    -> execute(['id_komunitas' => $id_komunitas]);
         
-    //     $this->response->redirect('/komunitas/lihat/'.$this->request->getPost('id_komunitas'));
-
-    // }
+        return $items;
+    }
 
     public function buatAction($id_komunitas){
         $form = new PagelaranForm();
@@ -166,6 +150,55 @@ class PagelaranController extends Controller
         }
 
         return $this->dispatcher->forward(['action' => 'buat']);
+    }
+
+    public function editAction($id_pagelaran){
+        $pagelaran = Pagelaran::findFirst([
+            'id=:id_pagelaran:', 'bind'=>['id_pagelaran'=>$id_pagelaran]
+            ]);
+        $form = new PagelaranForm($pagelaran);
+        $this->view->setVar('form', $form);
+        $this->view->setVar('id_pagelaran', (int)$id_pagelaran);
+    }
+
+    public function onsimpanAction($id_pagelaran){
+        $form = new PagelaranForm();
+        if($form->isValid($_POST)){
+            $pagelaran = Pagelaran::findFirst(['id=:id:', 'bind'=>['id'=>(int)$id_pagelaran]]);
+            $pagelaran->judul = $_POST['judul'];
+            $pagelaran->tempat = $_POST['tempat'];
+            $pagelaran->waktu_mulai = $_POST['waktu_mulai'];
+            $pagelaran->waktu_selesai = $_POST['waktu_selesai'];
+            $pagelaran->deskripsi = $_POST['deskripsi'];
+            if($this->request->hasFiles('photo')){
+                    $file = $this->request->getUploadedFiles('photo')[0];
+                    $filename = $pagelaran->id . "." .$file->getExtension();
+                    $target_file = $this->data_path . $filename;
+                    $file->moveTo($target_file);
+                    $pagelaran->photo_path = $filename;
+            }
+            if($pagelaran->update() == true){
+                $form->clear();
+                $this->view->setVar('form', $form);
+                $this->flash->setImplicitFlush(false)
+                    ->success('Pagelaran berhasil diubah.');
+            }
+            else{
+                    $this->flash->setImplicitFlush(false)
+                        ->error('Terjadi kesalahan. Silahkan coba lagi.');
+            }
+            
+        }
+        else{
+            // form tidak valid
+            $errmsg =[];
+            foreach($form->getMessages() as $m){
+                $errmsg[$m->getField()] = $m->getMessage();
+            }
+            $this->view->setVar('errmsg', $errmsg);
+        }
+
+        return $this->dispatcher->forward(['action' => 'edit']);
     }
       
 }

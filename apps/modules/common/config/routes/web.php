@@ -88,6 +88,13 @@ $router->addGet('/:controller/:action', [
     'action'    => 2,
 ]);
 
+$router->addPost('/:controller/:action', [
+    'namespace' => $namespace,
+    'module'    => 'common',
+    'controller'=> 1,
+    'action'    => 2,
+]);
+
 $router->addGet('/:controller/:action/:params', [
     'namespace' => $namespace,
     'module'    => 'common',
@@ -102,6 +109,23 @@ $router->addPost('/komunitas/buat', [
     'controller'=> 'komunitas',
     'action'    => 'onbuat',
 ]);
+
+$router->addPost('/komunitas/edit/:params', [
+    'namespace' => $namespace,
+    'module'    => 'common',
+    'controller'=> 'komunitas',
+    'action'    => 'onsimpan',
+    'params'    => 1
+]);
+
+$router->addPost('/pagelaran/edit/:params', [
+    'namespace' => $namespace,
+    'module'    => 'common',
+    'controller'=> 'pagelaran',
+    'action'    => 'onsimpan',
+    'params'    => 1
+]);
+
 
 $router->addPost('/komunitas/gabung', [
     'namespace' => $namespace,

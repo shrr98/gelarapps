@@ -61,7 +61,7 @@ class PagelaranForm extends BaseForm {
              new Text (
                 'waktu_mulai',
                 [
-                    'placeholder' => 'HH/BB/TTTT jj:mm',
+                    'placeholder' => 'TTTT/BB/HH jj:mm',
                     'class'       => 'form-control fadeIn first'
                 ]
             )
@@ -70,7 +70,7 @@ class PagelaranForm extends BaseForm {
             new Text (
                 'waktu_selesai',
                 [
-                    'placeholder' => 'HH/BB/TTTT jj:mm',
+                    'placeholder' => 'TTTT/BB/HH jj:mm',
                     'class'       => 'form-control fadeIn first'
                 ]
             )
@@ -99,6 +99,17 @@ class PagelaranForm extends BaseForm {
             )
         );
         
+        $this->add(
+            new Submit (
+                'Simpan',
+                [
+                    'name' => 'onsimpan',
+                    "class" => "fadeIn fourth"
+
+                ]
+            )
+        );
+
         $this->setUserOptions([
             'method'=> 'POST',
             'class' => 'loginForm',

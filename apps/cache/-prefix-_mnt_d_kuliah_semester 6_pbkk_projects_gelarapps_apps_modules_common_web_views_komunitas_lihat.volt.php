@@ -90,6 +90,13 @@
 
 		
     <h1>Komunitas > <?= $item->ko->nama_komunitas ?></h1>
+    <?php if (isset($tergabung)) { ?>
+        <?php if ($tergabung->role == 1) { ?>
+            <?= $this->flash->success('Admin') ?>
+        <?php } elseif ($tergabung->verified == 1) { ?>
+            <?= $this->flash->warning('Anggota') ?>
+        <?php } ?>
+    <?php } ?>
     <div>
         <table>
             <tr>
@@ -131,9 +138,50 @@
             <input type="hidden" name="id_komunitas" value=<?= $item->ko->id ?>>
             <input class='btn btn-primary' type="submit" value="Gabung" name="gabung">
         </form>
-    <?php } else { ?>
+    <?php } elseif ($tergabung->verified == 1) { ?>
         <button class='btn btn-secondary' disabled>Tergabung</button>
+        <a href="<?= $this->url->get('komunitas/anggota/' . $item->ko->id) ?>">
+            <button class="btn btn-primary">Lihat Anggota</button>
+        </a>
+        <?php if ($tergabung->role == 1) { ?>
+        <a href="<?= $this->url->get('komunitas/edit/' . $item->ko->id) ?>">
+            <button class="btn btn-info">Sunting Detail</button>
+        </a>
+        <a href="<?= $this->url->get('pagelaran/buat/' . $item->ko->id) ?>">
+            <button class="btn btn-info">Buat Pagelaran</button>
+        </a>
+        <?php } ?>
+    <?php } else { ?>
+        <button class='btn btn-secondary' disabled>Menunggu Konfirmasi</button>
     <?php } ?>
+    <a href="<?= $this->url->get('pagelaran/list/' . $item->ko->id) ?>">
+        <button class="btn btn-primary">Lihat Pagelaran</button>
+    </a>
+
+    <?php if ($this->session->has('auth') && isset($tergabung) && $tergabung->role == 1) { ?>
+    <div class="container-fluid">
+        <h3>Permintaan Bergabung</h3>
+        <div>
+            <ul>
+                <?php foreach ($permintaan as $item) { ?>
+                <li class='list-group-item'>
+                    <span>
+                        <form action="<?= $this->url->get('komunitas/verifikasi') ?>" method="POST">
+                        <a href="/user/<?= $item->id_user ?>"><?= $item->id_user ?></a> ingin bergabung.
+                        <input type="hidden" name="id_user" value=<?= $item->id_user ?>>
+                        <input type="hidden" name="id_komunitas" value=<?= $item->id_komunitas ?>>
+                        <input class='btn btn-success' type="submit" value="Terima" name="terima">
+                        <input class='btn btn-danger' type="submit" value="Tolak" name="tolak">
+                        </form>
+                    </span>
+                </li>
+                <?php } ?>
+    
+            </ul>
+        </div>
+        <?php } ?>
+        
+    </div>
 
 
 		

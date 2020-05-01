@@ -94,7 +94,7 @@
         <ul>
             <?php foreach ($items as $item) { ?>
                 <li>
-                    <?= $this->tag->image([$this->url->get('public/data/pagelaran/' . $item->pa->photo_path)]) ?>
+                    <?= $this->tag->image(['data/pagelaran/' . $item->pa->photo_path, 'width' => '10%']) ?>
                     <h5>
                         <a href="<?= $this->url->get('pagelaran/lihat/' . $item->pa->id) ?>"><?= $item->pa->judul ?></a>
                     </h5>

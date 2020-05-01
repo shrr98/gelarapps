@@ -4,6 +4,13 @@
 
 {% block content %}
     <h1>Komunitas > {{item.ko.nama_komunitas}}</h1>
+    {% if tergabung is defined %}
+        {% if tergabung.role == 1 %}
+            {{ flash.success('Admin') }}
+        {% elseif tergabung.verified == 1 %}
+            {{ flash.warning('Anggota')}}
+        {% endif %}
+    {% endif %}
     <div>
         <table>
             <tr>
@@ -45,7 +52,48 @@
             <input type="hidden" name="id_komunitas" value={{item.ko.id}}>
             <input class='btn btn-primary' type="submit" value="Gabung" name="gabung">
         </form>
-    {% else %}
+    {% elseif tergabung.verified == 1 %}
         <button class='btn btn-secondary' disabled>Tergabung</button>
+        <a href="{{ url("komunitas/anggota/"~item.ko.id)}}">
+            <button class="btn btn-primary">Lihat Anggota</button>
+        </a>
+        {% if tergabung.role == 1 %}
+        <a href="{{ url("komunitas/edit/"~item.ko.id)}}">
+            <button class="btn btn-info">Sunting Detail</button>
+        </a>
+        <a href="{{ url("pagelaran/buat/"~item.ko.id)}}">
+            <button class="btn btn-info">Buat Pagelaran</button>
+        </a>
+        {% endif %}
+    {% else %}
+        <button class='btn btn-secondary' disabled>Menunggu Konfirmasi</button>
     {% endif %}
+    <a href="{{ url("pagelaran/list/"~item.ko.id)}}">
+        <button class="btn btn-primary">Lihat Pagelaran</button>
+    </a>
+
+    {% if this.session.has('auth') and tergabung is defined and tergabung.role == 1%}
+    <div class="container-fluid">
+        <h3>Permintaan Bergabung</h3>
+        <div>
+            <ul>
+                {% for item in permintaan %}
+                <li class='list-group-item'>
+                    <span>
+                        <form action="{{url('komunitas/verifikasi')}}" method="POST">
+                        <a href="/user/{{item.id_user}}">{{item.id_user}}</a> ingin bergabung.
+                        <input type="hidden" name="id_user" value={{ item.id_user }}>
+                        <input type="hidden" name="id_komunitas" value={{ item.id_komunitas }}>
+                        <input class='btn btn-success' type="submit" value="Terima" name="terima">
+                        <input class='btn btn-danger' type="submit" value="Tolak" name="tolak">
+                        </form>
+                    </span>
+                </li>
+                {% endfor %}
+    
+            </ul>
+        </div>
+        {% endif %}
+        
+    </div>
 {% endblock %}

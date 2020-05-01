@@ -51,6 +51,17 @@ class KomunitasController extends Controller
             ]
         );
 
+        if($tergabung !=null && $tergabung->role ==1){
+            $permintaan = $this->modelsManager->createBuilder()
+                            -> addFrom(Keanggotaan::class)
+                            -> where("id_komunitas = :id:")
+                            -> andWhere("verified = 0")
+                            -> getQuery() 
+                            -> execute(['id' => $id_komunitas]);
+            $this->view->setVar('permintaan', $permintaan);
+        }
+
+
         $this->view->setVar('item', $item[0]);
         $this->view->setVar('tergabung', $tergabung);
     }
@@ -109,7 +120,7 @@ class KomunitasController extends Controller
             $this->flash->success('Berhasil bergabung!');
         }
         
-        $this->response->redirect('/komunitas/lihat/'.$this->request->getPost('id_komunitas'));
+        $this->response->redirect('/komunitas/lihat/'.$this->request->getPost('id_komunitas'))->send();
 
     }
 
@@ -153,5 +164,96 @@ class KomunitasController extends Controller
 
         return $this->dispatcher->forward(['action' => 'buat']);
     }
+
+    public function verifikasiAction(){
+        if (!$this->request->isPost()){
+            return (new Response())->redirect($_SERVER['HTTP_REFERER']);
+        }
+        $id_komunitas   = $_POST['id_komunitas'];
+        $id_user        = $_POST['id_user'];
+        $keanggotaan = Keanggotaan::findFirst([
+            'id_user = :id_user: and id_komunitas = :id_komunitas:',
+            'bind' => [ 'id_user' => $id_user, 'id_komunitas' => $id_komunitas]
+        ]);
+
+        if ($keanggotaan){
+            if(array_key_exists('terima', $_POST)){ // terima
+                $keanggotaan->verified = 1;
+                $keanggotaan->tgl_bergabung = date('Y/M/d h:m:s', strtotime("now"));
+                if($keanggotaan->update()){
+                    $this->flash->setImplicitFlush(False)->success('Sukses: Menerima '.$id_user);
+                }
+                else{
+                    $this->flash->setImplicitFlush(False)->error('Gagal: Menerima '.$id_user);
+                }
+            }
+            else{
+                if($keanggotaan->delete()){
+                    $this->flash->setImplicitFlush(False)->success('Sukses: Menolak '.$id_user);
+                }
+                else{
+                    $this->flash->setImplicitFlush(False)->error('Gagal: Menolak '.$id_user);
+                }
+            }
+        }
+
+        (new Response())->redirect('/komunitas/lihat/'.$id_komunitas)->send();
+
+    }
+
+    public function anggotaAction($id_komunitas){
+        if(!$this->session->has('auth')){
+            (new Response())->redirect('/komunitas/lihat/'. $id_komunitas)->send();
+        }
+        $anggota = $this->modelsManager->createBuilder()
+                                    -> addFrom(Keanggotaan::class)
+                                    -> where("id_komunitas = :id_komunitas:")
+                                    -> orderBy("id_user")
+                                    -> getQuery() 
+                                    -> execute(['id_komunitas' => (int)($id_komunitas)]);
+        
+        $this->view->setVar('anggota', $anggota);
+    }
       
+    public function editAction($id_komunitas){
+        $komunitas = Komunitas::findFirst([
+            'id=:id_komunitas:', 'bind'=>['id_komunitas'=>$id_komunitas]
+            ]);
+        $form = new KomunitasForm($komunitas);
+        $this->view->setVar('form', $form);
+        $this->view->setVar('id_komunitas', (int)$id_komunitas);
+    }
+
+    public function onsimpanAction($id_komunitas){
+        $form = new KomunitasForm();
+        if($form->isValid($_POST)){
+            $komunitas = Komunitas::findFirst(['id=:id:', 'bind'=>['id'=>(int)$id_komunitas]]);
+            $komunitas->nama_komunitas = $_POST['nama_komunitas'];
+            $komunitas->alamat = $_POST['alamat'];
+            $komunitas->kategori = $_POST['kategori'];
+            $komunitas->deskripsi = $_POST['deskripsi'];
+           
+            if($komunitas->update() == true){
+                $form->clear();
+                $this->view->setVar('form', $form);
+                $this->flash->setImplicitFlush(false)
+                    ->success('Komunitas berhasil diubah.');
+            }
+            else{
+                    $this->flash->setImplicitFlush(false)
+                        ->error('Terjadi kesalahan. Silahkan coba lagi.');
+            }
+            
+        }
+        else{
+            // form tidak valid
+            $errmsg =[];
+            foreach($form->getMessages() as $m){
+                $errmsg[$m->getField()] = $m->getMessage();
+            }
+            $this->view->setVar('errmsg', $errmsg);
+        }
+
+        return $this->dispatcher->forward(['action' => 'edit']);
+    }
 }

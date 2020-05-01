@@ -72,6 +72,17 @@ class KomunitasForm extends BaseForm {
             )
         );
         
+        $this->add(
+            new Submit (
+                'Simpan',
+                [
+                    'name' => 'onsimpan',
+                    "class" => "fadeIn fourth"
+
+                ]
+            )
+        );
+
         $this->setUserOptions([
             'method'=> 'POST',
             'class' => 'loginForm'

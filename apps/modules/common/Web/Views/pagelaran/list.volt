@@ -8,7 +8,7 @@
         <ul>
             {% for item in items %}
                 <li>
-                    {{ image(url('public/data/pagelaran/'~item.pa.photo_path))}}
+                    {{ image('data/pagelaran/'~item.pa.photo_path, "width" : "10%")}}
                     <h5>
                         <a href="{{url('pagelaran/lihat/'~item.pa.id)}}">{{item.pa.judul}}</a>
                     </h5>
