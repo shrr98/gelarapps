@@ -16,6 +16,12 @@
             {{ this.flash.output() }}
         </div>
         {{ form.startForm() }}
+
+            {{ form.rendering('photo') }}
+            {% if errmsg is defined and errmsg['photo'] is defined %}
+                {{ flash.error(errmsg['photo']) }}
+            {% endif %}
+
             {{ form.rendering('nama_komunitas') }}
             {% if errmsg is defined and errmsg['nama_komunitas'] is defined %}
                 {{ flash.error(errmsg['nama_komunitas']) }}

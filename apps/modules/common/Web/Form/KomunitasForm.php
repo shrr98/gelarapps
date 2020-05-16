@@ -85,8 +85,9 @@ class KomunitasForm extends BaseForm {
 
         $this->setUserOptions([
             'method'=> 'POST',
-            'class' => 'loginForm'
-        ]);        
+            'class' => 'loginForm',
+            'enctype'=>"multipart/form-data"
+        ]);          
     }
 
     private function generateOptions(){

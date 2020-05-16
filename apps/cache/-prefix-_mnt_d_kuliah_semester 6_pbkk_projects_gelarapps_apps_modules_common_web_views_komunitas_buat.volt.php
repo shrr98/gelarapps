@@ -100,6 +100,12 @@
             <?= $this->flash->output() ?>
         </div>
         <?= $form->startForm() ?>
+
+            <?= $form->rendering('photo') ?>
+            <?php if (isset($errmsg) && isset($errmsg['photo'])) { ?>
+                <?= $this->flash->error($errmsg['photo']) ?>
+            <?php } ?>
+
             <?= $form->rendering('nama_komunitas') ?>
             <?php if (isset($errmsg) && isset($errmsg['nama_komunitas'])) { ?>
                 <?= $this->flash->error($errmsg['nama_komunitas']) ?>

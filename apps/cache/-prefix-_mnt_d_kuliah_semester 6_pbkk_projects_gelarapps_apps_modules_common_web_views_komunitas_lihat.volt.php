@@ -97,6 +97,56 @@
             <?= $this->flash->warning('Anggota') ?>
         <?php } ?>
     <?php } ?>
+    <?= $this->tag->image(['data/komunitas/' . $item->ko->photo_path, 'width' => '30%', 'alt' => 'data/komunitas/' . $item->ko->photo_path]) ?>
+    <?php if (isset($tergabung)) { ?>
+        <?php if ($tergabung->role == 1) { ?>
+            <button data-toggle='modal' data-target='#deleteModal'>Hapus Foto</button>
+            <button data-toggle='modal' data-target='#changeModal'>Ubah Foto</button>
+
+            <div class="modal" id="deleteModal" role="dialog">
+                <div class="modal-dialog">
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Hapus Foto Komunitas</h4>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+                        <div class="modal-body">
+                            <form id='form-delete' action='/komunitas/deletephoto' method='post'>
+                                <input type="hidden" name="id_komunitas" value=<?= $item->ko->id ?>>
+                                <input type="submit" value="Hapus" name='deletephoto'>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal" id="changeModal" role="dialog">
+                <div class="modal-dialog">
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Ubah Foto Komunitas</h4>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+                        <div class="modal-body">
+                            <form id='form-delete' action='/komunitas/changephoto' method='post' enctype="multipart/form-data">
+                                <input type="hidden" name="id_komunitas" value=<?= $item->ko->id ?>>
+                                <input type="file" name="photo" id="photo">
+                                <input type="submit" value="Ubah" name='changephoto'>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <?php } ?>
+    <?php } ?>
     <div>
         <table>
             <tr>

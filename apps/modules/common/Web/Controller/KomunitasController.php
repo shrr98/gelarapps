@@ -23,6 +23,7 @@ class KomunitasController extends Controller
 {
     public function initialize(){
         $this->data_path = BASE_PATH . "/public/data/komunitas/";
+        $this->photo_default = "default.png";
     }
     public function indexAction(){
         echo "index komunitas";
@@ -135,10 +136,17 @@ class KomunitasController extends Controller
             $komunitas = new Komunitas();
             $komunitas->assign($_POST);
             $komunitas->owner = $this->session->get('auth')['username'];
-            $komunitas->photo = null;
-            if($komunitas->create() == true){    
-                $this->flash->setImplicitFlush(false)
-                    ->success('Komunitas berhasil dibuat!');
+            if($komunitas->create() == true){
+                if($this->request->hasFiles('photo')){
+                    $file = $this->request->getUploadedFiles('photo')[0];
+                    $filename = $komunitas->id . "." .$file->getExtension();
+                    $target_file = $this->data_path . $filename;
+                    $file->moveTo($target_file);
+                }
+                else{
+                    $filename = $this->photo_default;
+                }
+                $komunitas->photo_path = $filename;
                 $keanggotaan = new Keanggotaan();
                 $keanggotaan->id_user = $this->session->get('auth')['username'];
                 $keanggotaan->id_komunitas = $komunitas->id;
@@ -147,6 +155,10 @@ class KomunitasController extends Controller
                 $keanggotaan->create();
                 $form->clear();
                 $this->view->setVar('form', $form);
+                $komunitas->update();
+                $this->flash->setImplicitFlush(false)
+                    ->success('Komunitas berhasil dibuat!');
+                    
             }
             else{
                     $this->flash->setImplicitFlush(false)
@@ -255,5 +267,37 @@ class KomunitasController extends Controller
         }
 
         return $this->dispatcher->forward(['action' => 'edit']);
+    }
+
+    public function changephotoAction(){
+        $id_komunitas = $_POST['id_komunitas'];
+        $komunitas = Komunitas::findFirst([
+            'id=:id_komunitas:', 'bind'=>['id_komunitas'=>$id_komunitas]
+        ]);
+
+        if($this->request->hasFiles('photo')){
+            $file = $this->request->getUploadedFiles('photo')[0];
+            $filename = $komunitas->id . "." .$file->getExtension();
+            $target_file = $this->data_path . $filename;
+            $file->moveTo($target_file);
+            $komunitas->photo_path = $filename;
+            $komunitas->update();
+        }
+        $this->response->redirect('/komunitas/lihat/'.$id_komunitas)->send();
+    }
+
+    public function deletephotoAction(){
+        $id_komunitas = $_POST['id_komunitas'];
+        $komunitas = Komunitas::findFirst([
+            'id=:id_komunitas:', 'bind'=>['id_komunitas'=>$id_komunitas]
+        ]);
+
+        $filename = $komunitas->photo_path;
+        $target_file = $this->data_path . $filename;
+        unlink($target_file); //delete
+        $komunitas->photo_path = $this->photo_default;
+        $komunitas->update();
+
+        $this->response->redirect('/komunitas/lihat/'.$id_komunitas)->send();
     }
 }
