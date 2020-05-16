@@ -220,11 +220,17 @@ class KomunitasController extends Controller
         $anggota = $this->modelsManager->createBuilder()
                                     -> addFrom(Keanggotaan::class)
                                     -> where("id_komunitas = :id_komunitas:")
+                                    -> andWhere('verified = 1')
                                     -> orderBy("id_user")
                                     -> getQuery() 
                                     -> execute(['id_komunitas' => (int)($id_komunitas)]);
-        
+        $keanggotaan = Keanggotaan::findFirst([
+                    'id_komunitas=:id_komunitas: and id_user=:id_user:', 'bind'=>['id_komunitas'=>$id_komunitas, 'id_user'=>$this->session->get('auth')['username']]
+            ]);
+        $role = $keanggotaan->role;
         $this->view->setVar('anggota', $anggota);
+        $this->view->setVar('role', $role);
+        $this->view->setVar('id_komunitas', $id_komunitas);
     }
       
     public function editAction($id_komunitas){
@@ -276,6 +282,11 @@ class KomunitasController extends Controller
         ]);
 
         if($this->request->hasFiles('photo')){
+            if($komunitas->photo_path != $this->photo_default){
+                $filename = $komunitas->photo_path;
+                $target_file = $this->data_path . $filename;
+                unlink($target_file); //delete
+            }
             $file = $this->request->getUploadedFiles('photo')[0];
             $filename = $komunitas->id . "." .$file->getExtension();
             $target_file = $this->data_path . $filename;
@@ -291,13 +302,53 @@ class KomunitasController extends Controller
         $komunitas = Komunitas::findFirst([
             'id=:id_komunitas:', 'bind'=>['id_komunitas'=>$id_komunitas]
         ]);
-
-        $filename = $komunitas->photo_path;
-        $target_file = $this->data_path . $filename;
-        unlink($target_file); //delete
-        $komunitas->photo_path = $this->photo_default;
-        $komunitas->update();
+        if($komunitas->photo_path != $this->photo_default){
+            $filename = $komunitas->photo_path;
+            $target_file = $this->data_path . $filename;
+            unlink($target_file); //delete
+            $komunitas->photo_path = $this->photo_default;
+            $komunitas->update();
+        }
 
         $this->response->redirect('/komunitas/lihat/'.$id_komunitas)->send();
+    }
+
+    public function deletememberAction(){
+        $id_member      = $_POST['id_member'];
+        $id_komunitas   = $_POST['id_komunitas'];
+        $this->hapusmember($id_member, $id_komunitas);
+        $this->response->redirect('/komunitas/anggota/'.$id_komunitas)->send();
+    }
+
+    public function leaveAction(){
+        if ($this->session->has('auth')){
+            $id_member = $this->session->get('auth')['username'];
+        }
+        $id_komunitas = $_POST['id_komunitas'];
+        $this->hapusmember($id_member, $id_komunitas);
+        $this->response->redirect('/komunitas/anggota/'.$id_komunitas)->send();
+    }
+
+    public function setadminAction(){
+        $id_member = $_POST['id_member'];
+        $id_komunitas = $_POST['id_komunitas'];
+
+        $keanggotaan = Keanggotaan::findFirst([
+            'id_komunitas=:id_komunitas: and id_user=:id_member:', 'bind'=>['id_komunitas'=>$id_komunitas, 'id_member'=>$id_member]
+        ]);
+
+        if($keanggotaan){
+            $keanggotaan->role = 1;
+            $keanggotaan->update();
+        }
+        $this->response->redirect('/komunitas/anggota/'.$id_komunitas)->send();
+    }
+
+    private function hapusmember($id_member, $id_komunitas){
+        $keanggotaan = Keanggotaan::findFirst([
+            'id_komunitas=:id_komunitas: and id_user=:id_member:', 'bind'=>['id_komunitas'=>$id_komunitas, 'id_member'=>$id_member]
+        ]);
+        if ($keanggotaan)
+            $keanggotaan->delete();
     }
 }

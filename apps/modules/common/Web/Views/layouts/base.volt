@@ -15,6 +15,6 @@
 
 		{% block content %}{% endblock %}
 
-		
-		</body>
+    </body>
+    {% block footer %}{% endblock %}
 </html>

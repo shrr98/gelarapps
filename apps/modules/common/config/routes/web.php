@@ -58,7 +58,6 @@ $router->addGet('/komunitas', [
     'action'   => 'index',
 ]);
 
-
 $router->addGet('/pagelaran', [
     'namespace' => $namespace,
     'module'    => 'common',
@@ -149,6 +148,30 @@ $router->addPost('/pagelaran/buat/:params', [
     'controller'=> 'pagelaran',
     'action'    => 'onbuat',
     'params'    => 1,
+]);
+
+
+$router->addGet('/profil/:params', [
+    'namespace' => $namespace,
+    'module'    => 'common',
+    'controller'=> 'profil',
+    'action'   => 'lihat',
+    'params'   => 1
+]);
+
+
+$router->addPost('/profil/:action', [
+    'namespace' => $namespace,
+    'module'    => 'common',
+    'controller'=> 'profil',
+    'action'   => 1
+]);
+
+$router->addGet('/profil', [
+    'namespace' => $namespace,
+    'module'    => 'common',
+    'controller'=> 'profil',
+    'action'   => 'me',
 ]);
 
 

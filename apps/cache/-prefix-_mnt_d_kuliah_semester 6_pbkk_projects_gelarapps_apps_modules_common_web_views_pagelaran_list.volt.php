@@ -89,6 +89,7 @@
         <?php } ?>
 
 		
+    <?= $this->flash->output() ?>
     <h1>Pagelaran</h1>
     <div>
         <ul>
@@ -114,6 +115,6 @@
     </div>
 
 
-		
-		</body>
+    </body>
+    
 </html>

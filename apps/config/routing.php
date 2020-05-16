@@ -22,7 +22,7 @@ $container['router'] = function() use ($defaultModule, $modules) {
 		[
 			'namespace' => 'Gelarapps\Common\Web\Controller',
 			'controller' => 'error',
-			'action'     => 'route404',
+			'action'     => 'notfound',
 		]
 	);
 

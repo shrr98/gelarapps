@@ -112,13 +112,14 @@
                             <button type="button" class="close" data-dismiss="modal">&times;</button>
                         </div>
                         <div class="modal-body">
+                            <p>Yakin ingin menghapus foto komunitas?</p>
                             <form id='form-delete' action='/komunitas/deletephoto' method='post'>
                                 <input type="hidden" name="id_komunitas" value=<?= $item->ko->id ?>>
                                 <input type="submit" value="Hapus" name='deletephoto'>
                             </form>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
                         </div>
                     </div>
                 </div>
@@ -140,7 +141,7 @@
                             </form>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
                         </div>
                     </div>
                 </div>
@@ -234,6 +235,6 @@
     </div>
 
 
-		
-		</body>
+    </body>
+    
 </html>

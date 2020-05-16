@@ -1,4 +1,4 @@
-a:7:{i:0;s:2444:"<!DOCTYPE html>
+a:9:{i:0;s:2444:"<!DOCTYPE html>
 <html>
 	<head>
         <!--<meta charset="utf-8">
@@ -88,8 +88,8 @@ a:7:{i:0;s:2444:"<!DOCTYPE html>
 <nav>
         <?php } ?>
 
-		";s:7:"content";N;i:3;s:26:"
+		";s:7:"content";N;i:3;s:21:"
 
-		
-		</body>
+    </body>
+    ";s:6:"footer";N;i:4;s:9:"
 </html>";}

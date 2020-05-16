@@ -42,8 +42,8 @@ $container['dispatcher'] = function() {
             if ($exception instanceof DispatchException) {
                 $dispatcher->forward(
                     [
-                        'controller' => 'index',
-                        'action'     => 'fourOhFour',
+                        'controller' => 'error',
+                        'action'     => 'notfound',
                     ]
                 );
 

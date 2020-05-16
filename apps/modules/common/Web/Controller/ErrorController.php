@@ -21,4 +21,7 @@ class ErrorController extends Controller
     public function loginAction(){
         
     }
+
+    public function notfoundAction(){
+    }
 }

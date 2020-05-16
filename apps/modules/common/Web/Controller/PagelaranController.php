@@ -200,5 +200,25 @@ class PagelaranController extends Controller
 
         return $this->dispatcher->forward(['action' => 'edit']);
     }
+
+    public function hapusAction(){
+        $id_pagelaran = $this->request->getPost('id_pagelaran');
+        $pagelaran = Pagelaran::findFirst(
+            [
+                'id=:id_pagelaran: and creator=:username:',
+                'bind' => [ 'id_pagelaran' => $id_pagelaran, 'username'=> $this->session->get('auth')['username'] ]
+            ]
+            );
+        echo $id_pagelaran;
+        if($pagelaran){
+            echo 'ada';
+            $photo_file = $this->data_path . $pagelaran->photo_path;
+            unlink($photo_file);
+            if($pagelaran->delete())
+            $this->flash->setImplicitFlush(false)
+                ->success('Pagelaran berhasil dihapus.');
+        }
+        $this->response->redirect('/pagelaran/list/saya')->send();
+    }
       
 }
