@@ -4,19 +4,20 @@ namespace Gelarapps\Common\Web\Model;
 
 use Phalcon\Mvc\Model;
 
-class Pagelaran extends Model
+class Kegiatan extends Model
 {
     public $id;
+    public $creator;
     public $judul;
-    public $tempat;
+    public $id_komunitas;
     public $waktu_mulai;
     public $waktu_selesai;
     public $deskripsi;
-    public $photo_path;
+    public $tempat;
 
 
     public function initialize()
     {
-        $this->setSource('Pagelaran');
+        $this->setSource('Kegiatan');
     }
 }

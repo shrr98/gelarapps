@@ -126,6 +126,14 @@ $router->addPost('/pagelaran/edit/:params', [
 ]);
 
 
+$router->addPost('/kegiatan/edit/:params', [
+    'namespace' => $namespace,
+    'module'    => 'common',
+    'controller'=> 'kegiatan',
+    'action'    => 'onsimpan',
+    'params'    => 1
+]);
+
 $router->addPost('/komunitas/gabung', [
     'namespace' => $namespace,
     'module'    => 'common',
@@ -150,6 +158,13 @@ $router->addPost('/pagelaran/buat/:params', [
     'params'    => 1,
 ]);
 
+$router->addPost('/kegiatan/buat/:params', [
+    'namespace' => $namespace,
+    'module'    => 'common',
+    'controller'=> 'kegiatan',
+    'action'    => 'onbuat',
+    'params'    => 1,
+]);
 
 $router->addGet('/profil/:params', [
     'namespace' => $namespace,
@@ -174,5 +189,12 @@ $router->addGet('/profil', [
     'action'   => 'me',
 ]);
 
+// $router->addPost('/kegiatan/:params/komentar', [
+//     'namespace' => $namespace,
+//     'module'    => 'common',
+//     'controller'=> 'kegiatan',
+//     'action'    => 'komentar',
+//     'params'    => 1,
+// ]);
 
 return $router;

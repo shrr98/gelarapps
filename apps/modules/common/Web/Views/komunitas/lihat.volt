@@ -115,12 +115,18 @@
         <a href="{{ url("pagelaran/buat/"~item.ko.id)}}">
             <button class="btn btn-info">Buat Pagelaran</button>
         </a>
+        <a href="{{ url("kegiatan/buat/"~item.ko.id)}}">
+            <button class="btn btn-info">Buat Kegiatan</button>
+        </a>
         {% endif %}
     {% else %}
         <button class='btn btn-secondary' disabled>Menunggu Konfirmasi</button>
     {% endif %}
     <a href="{{ url("pagelaran/list/"~item.ko.id)}}">
         <button class="btn btn-primary">Lihat Pagelaran</button>
+    </a>
+    <a href="{{ url("kegiatan/list/"~item.ko.id)}}">
+        <button class="btn btn-primary">Lihat Kegiatan</button>
     </a>
 
     {% if this.session.has('auth') and tergabung is defined and tergabung.role == 1%}

@@ -113,7 +113,7 @@
             <label for="waktu_mulai">Waktu Mulai</label>
             <?= $form->rendering('waktu_mulai') ?>
             
-            <label for="waktu_mulai">Waktu Selesai</label>
+            <label for="waktu_selesai">Waktu Selesai</label>
             <?= $form->rendering('waktu_selesai') ?>
         
             <?= $form->rendering('komunitas') ?>

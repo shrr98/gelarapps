@@ -1,39 +1,34 @@
 {% extends "layouts/base.volt" %}
 
-{% block title %}Pagelaran{% endblock %}
+{% block title %}Kegiatan{% endblock %}
 
 {% block additional_header %}
     <link rel="stylesheet" href="{{ url('css/form.css') }}">
 {% endblock %}
 
 {% block content %}
-<h1>Sunting Pagelaranmu</h1>
+<h1>Sunting Kegiatanmu</h1>
 
 <div class="wrapper fadeInDown">
     <div id="formContent">
-            <h3>Pagelaran</h3>
+            <h3>Kegiatan</h3>
         <div class="notif">
             {{ this.flash.output() }}
         </div>
         {{ form.startForm() }}
-        <input type="hidden" name="id" value={{id_pagelaran}}>
+        <input type="hidden" name="id" value={{id_kegiatan}}>
             {{ form.rendering('judul') }}
             {% if errmsg is defined and errmsg['judul'] is defined %}
                 {{ flash.error(errmsg['judul']) }}
-            {% endif %}
-
-            {{ form.rendering('photo') }}
-            {% if errmsg is defined and errmsg['photo'] is defined %}
-                {{ flash.error(errmsg['photo']) }}
             {% endif %}
             
             <label for="waktu_mulai">Waktu Mulai</label>
             {{form.rendering('waktu_mulai')}}
             
-            <label for="waktu_selesai">Waktu Selesai</label>
+            <label for="waktu_mulai">Waktu Selesai</label>
             {{ form.rendering('waktu_selesai')}}
         
-            {{ form.rendering('komunitas') }}
+            {{ form.rendering('id_komunitas') }}
             {{ form.rendering('creator') }}
             
             {{ form.rendering('tempat') }}

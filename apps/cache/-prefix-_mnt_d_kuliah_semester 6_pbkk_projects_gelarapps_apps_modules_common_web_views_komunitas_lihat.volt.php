@@ -201,12 +201,18 @@
         <a href="<?= $this->url->get('pagelaran/buat/' . $item->ko->id) ?>">
             <button class="btn btn-info">Buat Pagelaran</button>
         </a>
+        <a href="<?= $this->url->get('kegiatan/buat/' . $item->ko->id) ?>">
+            <button class="btn btn-info">Buat Kegiatan</button>
+        </a>
         <?php } ?>
     <?php } else { ?>
         <button class='btn btn-secondary' disabled>Menunggu Konfirmasi</button>
     <?php } ?>
     <a href="<?= $this->url->get('pagelaran/list/' . $item->ko->id) ?>">
         <button class="btn btn-primary">Lihat Pagelaran</button>
+    </a>
+    <a href="<?= $this->url->get('kegiatan/list/' . $item->ko->id) ?>">
+        <button class="btn btn-primary">Lihat Kegiatan</button>
     </a>
 
     <?php if ($this->session->has('auth') && isset($tergabung) && $tergabung->role == 1) { ?>
