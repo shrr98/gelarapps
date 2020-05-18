@@ -13,7 +13,6 @@
 <link href="<?= $this->url->get('css/style1.css') ?>" rel="stylesheet">
 <link href="<?= $this->url->get('css/style2.css') ?>" rel="stylesheet">
 
-
 <script src="<?= $this->url->get('js/jquery.js') ?>"></script>
 <script src="<?= $this->url->get('js/script.js') ?>"></script>
 
@@ -44,13 +43,12 @@
 	<body>
         
         <?php if ($this->session->has('auth')) { ?>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="/">GelarApps</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light" style="font-size: 20px;">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="/" ><img style=" height: 50px;" src="http://gelarapps.local/assets/logo.png"></a>
+    </div>
+    <ul class="navbar-nav navbar-right">
         <li class="nav-item">
           <a class="nav-link" href="<?= $this->url->get('beranda') ?>">Beranda <span class="sr-only">(current)</span></a>
         </li>
@@ -60,19 +58,26 @@
         <li class="nav-item">
             <a class="nav-link" href="<?= $this->url->get('pagelaran') ?>">Pagelaran</a>
         </li>
-        <li class="nav-item">
+        <!-- <li class="nav-item">
           <a class="nav-link" href="<?= $this->url->get('profil') ?>"><?= $this->session->get('auth')['username'] ?></a>
-        </li>
-        <li class="nav-item">
+        </li> -->
+        <li class="nav-item dropdown submenu">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="<?= $this->url->get('profil') ?>"><?= $this->session->get('auth')['username'] ?>
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li class="nav-item"><a class="nav-link" href="<?= $this->url->get('logout') ?>">Logout</a></li>
+                            </ul>
+                        </li>
+        <!-- <li class="nav-item">
           <a class="nav-link" href="<?= $this->url->get('logout') ?>">Logout</a>
-        </li>
+        </li> -->
       </ul>
-    </div>
+  </div>
   </nav>
-<nav>
+
         <?php } else { ?>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="/">GelarApps</a>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light" style="font-size: 20px;">
+    <a class="navbar-brand" href="/" ><img style=" height: 50px;" src="http://gelarapps.local/assets/logo.png"></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>

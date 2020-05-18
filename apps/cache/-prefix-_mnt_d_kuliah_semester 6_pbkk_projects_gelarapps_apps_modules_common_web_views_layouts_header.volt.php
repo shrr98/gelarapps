@@ -10,7 +10,6 @@
 <link href="<?= $this->url->get('css/style1.css') ?>" rel="stylesheet">
 <link href="<?= $this->url->get('css/style2.css') ?>" rel="stylesheet">
 
-
 <script src="<?= $this->url->get('js/jquery.js') ?>"></script>
 <script src="<?= $this->url->get('js/script.js') ?>"></script>
 

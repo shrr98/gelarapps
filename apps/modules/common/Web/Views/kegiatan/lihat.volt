@@ -87,18 +87,18 @@
 
     <div class='komentar'>
         <h4>Komentar</h4>
-        {% for item in komentar %}
+        {% for it in komentar %}
         <div>
             <h4>
-                <a href="{{ '/profil/' ~ item.author }}">
-                    {{ item.author }}
+                <a href="{{ '/profil/' ~ it.author }}">
+                    {{ it.author }}
                 </a>
             </h4>
             <p>
-                {{ date('d-M-Y H:i:s', strtotime(item.waktu)) }}
+                {{ date('d-M-Y H:i:s', strtotime(it.waktu)) }}
             </p>
             <div>
-                {{ item.isi }}
+                {{ it.isi }}
             </div>
         </div>
         {% endfor %}

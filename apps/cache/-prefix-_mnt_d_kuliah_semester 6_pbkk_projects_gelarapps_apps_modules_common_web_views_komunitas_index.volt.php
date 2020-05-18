@@ -13,7 +13,6 @@
 <link href="<?= $this->url->get('css/style1.css') ?>" rel="stylesheet">
 <link href="<?= $this->url->get('css/style2.css') ?>" rel="stylesheet">
 
-
 <script src="<?= $this->url->get('js/jquery.js') ?>"></script>
 <script src="<?= $this->url->get('js/script.js') ?>"></script>
 
@@ -42,13 +41,12 @@
 	<body>
         
         <?php if ($this->session->has('auth')) { ?>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="/">GelarApps</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light" style="font-size: 20px;">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="/" ><img style=" height: 50px;" src="http://gelarapps.local/assets/logo.png"></a>
+    </div>
+    <ul class="navbar-nav navbar-right">
         <li class="nav-item">
           <a class="nav-link" href="<?= $this->url->get('beranda') ?>">Beranda <span class="sr-only">(current)</span></a>
         </li>
@@ -58,19 +56,26 @@
         <li class="nav-item">
             <a class="nav-link" href="<?= $this->url->get('pagelaran') ?>">Pagelaran</a>
         </li>
-        <li class="nav-item">
+        <!-- <li class="nav-item">
           <a class="nav-link" href="<?= $this->url->get('profil') ?>"><?= $this->session->get('auth')['username'] ?></a>
-        </li>
-        <li class="nav-item">
+        </li> -->
+        <li class="nav-item dropdown submenu">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="<?= $this->url->get('profil') ?>"><?= $this->session->get('auth')['username'] ?>
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li class="nav-item"><a class="nav-link" href="<?= $this->url->get('logout') ?>">Logout</a></li>
+                            </ul>
+                        </li>
+        <!-- <li class="nav-item">
           <a class="nav-link" href="<?= $this->url->get('logout') ?>">Logout</a>
-        </li>
+        </li> -->
       </ul>
-    </div>
+  </div>
   </nav>
-<nav>
+
         <?php } else { ?>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="/">GelarApps</a>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light" style="font-size: 20px;">
+    <a class="navbar-brand" href="/" ><img style=" height: 50px;" src="http://gelarapps.local/assets/logo.png"></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -89,18 +94,45 @@
         <?php } ?>
 
 		
-    <h1>Komunitas</h1>
-    <div class='row'>
-        <div class='col-md-4'>
-            <a href="/komunitas/list/saya">Komunitas Saya</a>
-        </div>
-        <div class='col-md-4'>
-            <a href="/komunitas/cari">Cari Komunitas</a>
-        </div>
-        <div class='col-md-4'>
-            <a href="/komunitas/buat">Buat Komunitas</a>
-        </div>
+
+<div class="jumbotron" style="height: 300px;">
+
+    <h1 align="center" style= "font-size: 30px;">Komunitas</h1>
+
+<div class="row" style="margin-top: 30px;">
+    <div class="card text-center col-md-4" align="center">
+      <div class="card-header">
+        Komunitas Saya
+      </div>
+      <div class="card-body">
+        <h5 class="card-title">Lihat Komunitas Saya</h5>
+        <p class="card-text">Anda dapat melihat Komunitas yang telah Anda buat.</p>
+        <a href="/komunitas/list/saya" class="btn btn-primary">Komunitas Saya</a>
+      </div>
     </div>
+    <div class="card text-center col-md-4" align="center">
+      <div class="card-header">
+        Cari Komunitas
+      </div>
+      <div class="card-body">
+        <h5 class="card-title">Cari Komunitas</h5>
+        <p class="card-text">Anda dapat mencari Komunitas berdasarkan dengan kategorinya.</p>
+        <a href="/komunitas/cari" class="btn btn-primary">Cari Komunitas</a>
+      </div>
+    </div>
+    <div class="card text-center col-md-4" align="center">
+      <div class="card-header">
+        Buat Komunitas
+      </div>
+      <div class="card-body">
+        <h5 class="card-title">Buat Komunitas</h5>
+        <p class="card-text">Anda dapat membuat Komunitas sesuai dengan kategori yang telah ada.</p>
+        <a href="/komunitas/buat" class="btn btn-primary">Buat Komunitas</a>
+      </div>
+    </div>
+</div>
+</div>
+    
 
 
     </body>
