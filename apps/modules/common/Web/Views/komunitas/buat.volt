@@ -7,7 +7,6 @@
 {% endblock %}
 
 {% block content %}
-<h1>Buat Komunitasmu</h1>
 
 <div class="wrapper fadeInDown">
     <div id="formContent">

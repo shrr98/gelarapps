@@ -3,21 +3,20 @@
 {% block title %}Komunitas{% endblock %}
 
 {% block content %}
-    <h1>Komunitas</h1>
-    <div>
-        <ul>
+   
+    <div class="jumbotron">
+
+        <div class="card-group">
             {% for item in items %}
-                <li>
-                    <h5>
-                        <a href="{{url('komunitas/lihat/'~item.id)}}">{{item.nama_komunitas}}</a>
-                    </h5>
-                    <h6>
-                        <a href="{{url('komunitas/kategori/'~item.id_kat)}}">
-                            {{item.kategori}}
-                        </a>
-                    </h6>
-                </li>
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Komunitas</h5>
+              <p class="card-text"><a href="{{url('komunitas/lihat/'~item.id)}}">{{item.nama_komunitas}}</a></p>
+              <p class="card-text">Kategori : <a href="{{url('komunitas/kategori/'~item.id_kat)}}">
+                                {{item.kategori}}
+                            </a></p>
+            </div>
             {% endfor %}
-        </ul>
+          </div>
     </div>
 {% endblock %}
