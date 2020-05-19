@@ -3,7 +3,7 @@
 {% block title %}Anggota{% endblock %}
 
 {% block content %}
-    <h1>Anggota Komunitas</h1>
+    <h1 align="center">Anggota Komunitas</h1>
     <div>
         <table class='table'>
             {% for item in anggota %}
