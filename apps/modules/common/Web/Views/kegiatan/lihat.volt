@@ -3,7 +3,7 @@
 {% block title %}Kegiatan : {{item.judul}}{% endblock %}
 
 {% block content %}
-    <h1><a href="{{url('kegiatan/list/'~komunitas.id)}}">Kegiatan</a> > {{item.judul}}</h1>
+    <h1 align="center"><a href="{{url('kegiatan/list/'~komunitas.id)}}">Kegiatan</a> > {{item.judul}}</h1>
     <div class='container-fluid'>
         <table>
             <tr>
