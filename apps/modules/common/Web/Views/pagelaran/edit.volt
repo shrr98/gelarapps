@@ -7,7 +7,7 @@
 {% endblock %}
 
 {% block content %}
-<h1>Sunting Pagelaranmu</h1>
+<h1 align="center">Sunting Pagelaranmu</h1>
 
 <div class="wrapper fadeInDown">
     <div id="formContent">

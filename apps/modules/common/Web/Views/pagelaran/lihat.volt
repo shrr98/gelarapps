@@ -3,7 +3,7 @@
 {% block title %}Pagelaran : {{item.pa.judul}}{% endblock %}
 
 {% block content %}
-    <h1><a href="{{url('pagelaran')}}">Pagelaran</a> > {{item.pa.judul}}</h1>
+    <h1 align="center"><a href="{{url('pagelaran')}}">Pagelaran</a> > {{item.pa.judul}}</h1>
     <div class='container-fluid'>
         {{ image('data/pagelaran/'~item.pa.photo_path, "width" : "50%")}}
         <table>

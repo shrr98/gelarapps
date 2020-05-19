@@ -4,7 +4,7 @@
 
 {% block content %}
     {{ this.flash.output() }}
-    <h1>Pagelaran</h1>
+    <h1 align="center">Pagelaran</h1>
     <div>
         <ul>
             {% for item in items %}

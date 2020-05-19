@@ -7,7 +7,7 @@
 {% endblock %}
 
 {% block content %}
-<h1>Buat Pagelaranmu</h1>
+<h1 align="center">Buat Pagelaranmu</h1>
 
 <div class="wrapper fadeInDown">
     <div id="formContent">
