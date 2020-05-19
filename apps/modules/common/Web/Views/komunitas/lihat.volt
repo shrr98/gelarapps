@@ -3,7 +3,7 @@
 {% block title %}Komunitas : {{item.ko.nama_komunitas}}{% endblock %}
 
 {% block content %}
-    <h1>Komunitas > {{item.ko.nama_komunitas}}</h1>
+    <h1 align="center">Komunitas > {{item.ko.nama_komunitas}}</h1>
     {% if tergabung is defined %}
         {% if tergabung.role == 1 %}
             {{ flash.success('Admin') }}
