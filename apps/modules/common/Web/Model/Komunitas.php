@@ -11,9 +11,9 @@ class Komunitas extends Model
     public $alamat;
     public $kategori;
     // public $deskripsi;
+    public $deskripsi;
     public $photo_path;
     public $owner;
-    public $deskripsi_komunitas;
 
     public function initialize()
     {
