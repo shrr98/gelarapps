@@ -3,6 +3,7 @@
 ## gelarapps
 
 Website untuk pecinta seni dan budaya Indonesia.
+Gelarapps diimplementasikan menggunakan framework Phalcon.
 
 ### Oleh :
 
@@ -10,4 +11,4 @@ Website untuk pecinta seni dan budaya Indonesia.
 
 2. Putri Endah Puspitasari  (05111740000039)
 
-Kelas PBKK - C
+Website ini dibuat untuk memenuhi Final Project Kelas PBKK - C ITS 2019
